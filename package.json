@@ -1,5 +1,5 @@
 {
-  "name": "static-file-handler-demo-proxy",
+  "name": "serverless-website",
   "private": true,
   "version": "1.0.0",
   "main": "index.js",
