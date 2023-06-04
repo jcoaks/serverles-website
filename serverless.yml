@@ -1,0 +1,48 @@
+service: static-file-handler-demo
+
+plugins:
+  - serverless-aws-static-file-handler/plugins/BinaryMediaTypes
+
+custom:
+  apiGateway:
+    binaryMediaTypes:
+      - application/*
+      - audio/*
+      - font/*
+      - image/*
+      - video/*
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+
+functions:
+  html:
+    handler: handler.root
+    events:
+      - http:
+          path: /
+          method: get
+
+  binary:
+    handler: handler.binary
+    events:
+      - http:
+          path: /binary/{pathvar+}
+          method: get
+
+  # API Gateway V2 Payload or HTTP API are below. As described at https://www.serverless.com/framework/docs/providers/aws/events/http-api
+  v2_html:
+    handler: handler.v2_root
+    events:
+      - httpApi:
+          path: /v2
+          method: get
+
+  v2_binary:
+    handler: handler.v2_binary
+    events:
+      - httpApi:
+          path: /v2/binary/{pathvar+}
+          method: get
